@@ -15,13 +15,14 @@ if(!mysqli_select_db($mysqli_link,DB_DATABASE)){
 
 
 // Funciones
-
 function validar($string){
-	//if ( preg_match("/[^a-zA-Z0-9_- ]/",$string) == 0 ){
-		return $string;
-	//}
-	return "";
+	if ( $string && !preg_match("/^[a-zA-Z0-9\-\,\ ]+$/",$string) ){
+			echo "Error de validacion: >".$string."<";
+			exit;
+	}
+	return $string;
 }
+
 
 
 function traer_gear(){
