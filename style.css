@@ -1,0 +1,158 @@
+body{
+	margin: 0;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+
+div{
+	display: block;
+}
+
+
+.panel {
+	width: 350px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.procesador {
+	margin: 25px;
+	font-size: 12px;
+}
+
+.navlogin {
+	width: 100%;
+	height: 35px;
+	padding-top:  3px;
+	padding-bottom: 0;
+	text-align: right;
+	font:normal 9pt sans-serif;
+	background-color: rgba(0,0,0,0.2);
+}
+
+.navlogin div.users {
+	float:left;
+	margin-top: 10px;
+	padding-left: 30px;
+}
+
+.userphoto  {
+	border: none;
+	height: 30px;
+	vertical-align: middle;
+	width: 30px;
+	border-radius: 50%;
+}
+
+
+
+.main {
+	width: 100%;
+	min-height: 500px;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.izq {
+	float: left;
+	width: 350px;
+}
+
+.tracks {
+	position: absolute;
+	width: 900px;
+	top: 20px;
+	left: 350px;	
+}
+
+.columna  {
+	width: 320px;
+	margin-top: 20px;
+	margin-left: 10px;
+	margin-bottom: 30px;
+}
+
+.columna table {
+	width: 320px;
+	font-size: 12px;
+	border: 1px solid #c0c0c0;
+}
+
+.columna table tr {
+	padding: 0;	
+}
+
+.columna table th {
+	border: 1px solid #c0c0c0;
+	padding: 0;
+	background: #c0c0c0;
+}
+
+table.tracklist tr td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+.tr1 { width: 115px;}
+.tr2 { width: 250px;}
+.tr3 { width: 50px;}
+.tr4 { width: 303px;}
+
+
+.col1 {	width: 170px;}
+.col2 {	width: 50px;}
+.col3 {	width: 50px;}
+.col4 {  width: 50px;}
+
+
+.tracks table{
+	border: 1px solid #c0c0c0;
+}
+
+.tracks table th {
+	background: #c0c0c0;
+}
+
+.tracks table th, .tracks table td {
+	font-size: 10px;
+	padding: 0;
+}
+
+.tracks table tr:hover td , .columna table tr:hover td{
+   background-color: #c8d779;
+}
+
+
+
+.nav  {
+	position: relative;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	font-size: 14px;
+}
+
+.fecha {
+	position: relative;
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+
+.nav2  {
+	position: relative;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	font-size: 10px;
+}
+
+
+a:link, a:visited, a:hover, a:active {
+    color: blue;
+	 font-style: normal;
+	 text-decoration: none;
+}
+
+

@@ -1,0 +1,85 @@
+html, body {
+	background-color: #333;
+	color: #ccc;
+	font-size: 14px;
+}
+
+table {
+	font-size: 10px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 30px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition: 0.5s;
+    padding-top: 5px;
+}
+
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.filters {
+	width: 400px;
+   margin-left: 30px;
+}
+
+.procesador {
+	margin: 25px;
+	font-size: 12px;
+}
+
+.tracks {
+	width: 1130px;
+	padding-top: 5px;
+}
+
+a:link, a:visited, a:hover, a:active {
+	font-style: normal;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+label {
+	font-size: 10px;
+	color: #999;
+}
+
+.dataTables_wrapper table {
+	font-size: 10px;
+}
+
+table.dataTable tr:hover td {
+   background-color: #FC4C02;
+}
+
+
+table.dataTable thead th {
+	border: 1px solid;
+}
+
+table.dataTable thead tr {
+    background-color: #111;
+}
+table.dataTable tbody tr {
+    background-color: #222;
+}
+
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate,
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	color: #999 !important;
+	font-size: 11px;
+}
+
+
+

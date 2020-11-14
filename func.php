@@ -1,0 +1,239 @@
+<?php
+
+session_start();
+
+
+$mysqli_link=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD);
+if(!$mysqli_link){
+	echo  "Error: error de conexion con mysql";
+	exit;
+}
+if(!mysqli_select_db($mysqli_link,DB_DATABASE)){
+	echo "Error: error accediendo a la base de datos";
+	exit;
+}
+
+
+// Funciones
+
+function validar($string){
+	//if ( preg_match("/[^a-zA-Z0-9_- ]/",$string) == 0 ){
+		return $string;
+	//}
+	return "";
+}
+
+
+function traer_gear(){
+	
+	global $access_token, $athlete, $mysqli_link;
+
+	$sql = "Select distinct gear_id 
+	               from tracks 
+	         where gear_id != '' and
+			       athlete = '$athlete' and
+			       gear_id not in (select id from gears where athlete='$athlete') ";
+
+	$Resp= mysqli_query($mysqli_link,$sql);
+	
+	while($row=mysqli_fetch_array($Resp)){
+		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "https://www.strava.com/api/v3/gear/".$row["gear_id"]);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer '.$access_token));
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE );
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		$output = curl_exec($ch);
+		$info = curl_getinfo($ch);
+		curl_close($ch);	
+			
+		$gear = json_decode($output,true);
+		
+		if($gear["name"]){
+			
+			$name = scape($gear["name"]);
+			$id   = $gear["id"];
+			
+			$slq2 = "insert into gears (id,athlete,name)
+			                     values('$id','$athlete','$name') ";
+								 
+			$Resp2 = mysqli_query($mysqli_link,$slq2);
+			
+		}
+		
+	}
+
+	return;
+}
+
+
+
+function traer_tracks(){
+	
+	global $access_token, $athlete, $mysqli_link;
+	
+	$sql = "select y,m from busq where athlete='$athlete'";
+	$Resp=mysqli_query($mysqli_link,$sql);
+	
+	if( mysqli_num_rows($Resp)==0 )	{
+		
+		$sql2 = "select year(start_date_local) as y,
+	               month(start_date_local) as m
+	          from tracks where athlete='$athlete' order by start_date_local desc limit 1";
+			  
+			  
+		$Resp2= mysqli_query($mysqli_link,$sql2);
+	
+		if(!mysqli_num_rows($Resp2)){
+			
+			$after = mktime(0,0,0,1,1,1970);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, "https://www.strava.com/api/v3/athlete/activities?after=".$after."&per_page=1");
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer '.$access_token));
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE );
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			$output = curl_exec($ch);
+			$info = curl_getinfo($ch);
+			curl_close($ch);
+		
+			if($info["http_code"] != "200"){
+				echo $info["http_code"];
+				return;
+			}
+		
+			$tracks = json_decode($output,true);
+		
+			$y = substr($tracks[0]["start_date_local"],0,4);
+			$m = substr($tracks[0]["start_date_local"],5,2);
+		
+		}else{
+		
+			$row2 = mysqli_fetch_array($Resp2);
+			$y = $row2["y"];
+			$m = $row2["m"];
+			
+		}
+	
+		$sql3 = "insert into busq (athlete,y,m) values('$athlete','$y','$m'); ";
+		$Resp3 = mysqli_query($mysqli_link,$sql3);	
+
+	}else{
+		
+		$row = mysqli_fetch_array($Resp);
+		$y = $row["y"];
+		$m = $row["m"];
+		
+	}
+
+	
+	$after = mktime(0,0,0,$m,1,$y);
+	$before= mktime(0,0,0,$m+1,1,$y);
+
+	
+	if($after > mktime()){
+		echo "--";
+		exit;
+	}else{
+		echo date("m-Y",$after);
+	}
+	
+	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://www.strava.com/api/v3/athlete/activities?after=".$after."&before=".$before);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer '.$access_token));
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE );
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	$output = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	curl_close($ch);
+
+	if($info["http_code"] != "200"){
+		echo $info["http_code"];
+		return;
+	}	
+	
+	$tracks = json_decode($output,true);
+	
+	foreach( $tracks as $track){
+		
+		$id = $track["id"];
+		$external_id = $track["external_id"];
+		$name = scape($track["name"]);
+		$distance = $track["distance"];
+		$moving_time = $track["moving_time"];
+		$total_elevation_gain = $track["total_elevation_gain"];
+		$type = $track["type"];
+		$start_date_local = $track["start_date_local"];
+		$average_speed = $track["average_speed"];
+		$gear_id = $track["gear_id"];
+		$location_city = scape($track["location_city"]);
+		$location_state = scape($track["location_state"]);
+		$location_country = scape($track["location_country"]);
+		
+		$achievement_count = $track["achievement_count"];
+		$kudos_count = $track["kudos_count"];
+		$average_heartrate = $track["average_heartrate"];
+		$max_heartrate = $track["max_heartrate"];
+		
+		$elev_high = $track["elev_high"];
+		$elev_low = $track["elev_low"];
+		$start_latlng = $track["start_latlng"][0].", ".$track["start_latlng"][1];
+		$end_latlng =   $track["end_latlng"][0].", ".$track["end_latlng"][1];
+		
+		$workout_type = $track["workout_type"];
+		$average_cadence = $track["average_cadence"];
+		$average_temp = $track["average_temp"];
+		$average_watts = $track["average_watts"];
+		$suffer_score = $track["suffer_score"];
+		
+		
+		
+		
+			
+		$sql = "INSERT into tracks (athlete,id,external_id,name,distance,moving_time,
+			                            total_elevation_gain,type,start_date_local,average_speed,gear_id,
+										location_city,location_state,location_country,
+										achievement_count,kudos_count,average_heartrate,max_heartrate,
+										elev_high,elev_low,start_latlng,end_latlng,workout_type,
+										average_cadence,average_temp,average_watts,suffer_score
+									)
+
+			    values('$athlete','$id','$external_id','$name','$distance','$moving_time',
+				       '$total_elevation_gain','$type','$start_date_local','$average_speed','$gear_id',
+					   '$location_city','$location_state','$location_country',
+					   '$achievement_count','$kudos_count','$average_heartrate','$max_heartrate',
+					   '$elev_high','$elev_low','$start_latlng','$end_latlng','$workout_type',
+					   '$average_cadence','$average_temp','$average_watts','$suffer_score'
+					   )";
+				
+		$Resp = mysqli_query($mysqli_link,$sql);
+			
+	}
+	
+	$m++;
+	
+	$sql = "update busq set m='$m' where athlete='$athlete'";
+	$Resp= mysqli_query($mysqli_link,$sql);
+	
+		
+}
+
+
+function scape($str){
+	
+	return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"),
+					   array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'),
+					   $str);
+	
+}
+
+
+
+
+?>
