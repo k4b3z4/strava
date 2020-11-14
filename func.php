@@ -192,8 +192,13 @@ function traer_tracks(){
 		$average_temp = $track["average_temp"];
 		$average_watts = $track["average_watts"];
 		$suffer_score = $track["suffer_score"];
+
+		$calories = $track["calories"];
+		$device_name = $track["device_name"];
 		
-		
+		$highlighted_kudosers = json_encode($track["highlighted_kudosers"]);
+		$gear = json_encode($track["gear"]);
+		$segment_efforts = json_encode($track["segment_efforts"]);
 		
 		
 			
@@ -202,7 +207,8 @@ function traer_tracks(){
 										location_city,location_state,location_country,
 										achievement_count,kudos_count,average_heartrate,max_heartrate,
 										elev_high,elev_low,start_latlng,end_latlng,workout_type,
-										average_cadence,average_temp,average_watts,suffer_score
+										average_cadence,average_temp,average_watts,suffer_score,calories,
+										device_name,gear,segment_efforts,highlighted_kudosers
 									)
 
 			    values('$athlete','$id','$external_id','$name','$distance','$moving_time',
@@ -210,7 +216,8 @@ function traer_tracks(){
 					   '$location_city','$location_state','$location_country',
 					   '$achievement_count','$kudos_count','$average_heartrate','$max_heartrate',
 					   '$elev_high','$elev_low','$start_latlng','$end_latlng','$workout_type',
-					   '$average_cadence','$average_temp','$average_watts','$suffer_score'
+					   '$average_cadence','$average_temp','$average_watts','$suffer_score','$calories',
+					   '$device_name','$gear','$segment_efforts','$highlighted_kudosers'
 					   )";
 				
 		$Resp = mysqli_query($mysqli_link,$sql);
