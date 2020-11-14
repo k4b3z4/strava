@@ -161,7 +161,7 @@ function traer_tracks(){
 	
 	$tracks = json_decode($output,true);
 	
-	foreach( $tracks as $track){
+	foreach($tracks as $track){
 		
 		$id = $track["id"];
 		$external_id = $track["external_id"];
@@ -200,7 +200,7 @@ function traer_tracks(){
 		$gear = json_encode($track["gear"]);
 		$segment_efforts = json_encode($track["segment_efforts"]);
 		
-		
+		$track_ = json_encode($track);
 			
 		$sql = "INSERT into tracks (athlete,id,external_id,name,distance,moving_time,
 			                            total_elevation_gain,type,start_date_local,average_speed,gear_id,
@@ -208,7 +208,7 @@ function traer_tracks(){
 										achievement_count,kudos_count,average_heartrate,max_heartrate,
 										elev_high,elev_low,start_latlng,end_latlng,workout_type,
 										average_cadence,average_temp,average_watts,suffer_score,calories,
-										device_name,gear,segment_efforts,highlighted_kudosers
+										device_name,gear,segment_efforts,highlighted_kudosers,track
 									)
 
 			    values('$athlete','$id','$external_id','$name','$distance','$moving_time',
@@ -217,7 +217,7 @@ function traer_tracks(){
 					   '$achievement_count','$kudos_count','$average_heartrate','$max_heartrate',
 					   '$elev_high','$elev_low','$start_latlng','$end_latlng','$workout_type',
 					   '$average_cadence','$average_temp','$average_watts','$suffer_score','$calories',
-					   '$device_name','$gear','$segment_efforts','$highlighted_kudosers'
+					   '$device_name','$gear','$segment_efforts','$highlighted_kudosers','$track_'
 					   )";
 				
 		$Resp = mysqli_query($mysqli_link,$sql);
