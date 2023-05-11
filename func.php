@@ -154,12 +154,16 @@ function traer_tracks(){
 	$info = curl_getinfo($ch);
 	curl_close($ch);
 
+    logger("response: ". $info["http_code"]);
+
 	if($info["http_code"] != "200"){
 		echo $info["http_code"];
 		return;
 	}	
 	
 	$tracks = json_decode($output,true);
+
+    logger("tracks: ". print_r($tracks,true));
 	
 	foreach($tracks as $track){
 		
@@ -241,7 +245,13 @@ function scape($str){
 	
 }
 
-
+Function logger($logMSG,$nivel=0) {
+    if ($nivel <= logLEVEL){
+        $logFP=fopen("logs/cliente-".date("Ymd").".log","a");
+        fputs($logFP, date('Y-m-d H:i:s') ."|" . $nivel . "| -> $logMSG\n");
+        fclose($logFP);
+    }
+}
 
 
 ?>
