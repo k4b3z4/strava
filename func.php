@@ -209,30 +209,35 @@ function traer_tracks(){
 		$segment_efforts = json_encode($track["segment_efforts"]);
 		
 		$track_ = json_encode($track);
-			
-		$sql = "INSERT into tracks (athlete,id,external_id,name,distance,moving_time,
+				
+		$Resp = mysqli_query($mysqli_link,$sql);
+
+
+        $stmt = mysqli_prepare($link, "INSERT INTO tracks
+                                    (athlete,id,external_id,name,distance,moving_time,
 			                            total_elevation_gain,type,start_date_local,average_speed,gear_id,
 										location_city,location_state,location_country,
 										achievement_count,kudos_count,average_heartrate,max_heartrate,
 										elev_high,elev_low,start_latlng,end_latlng,workout_type,
 										average_cadence,average_temp,average_watts,suffer_score,calories,
-										device_name,gear,segment_efforts,highlighted_kudosers,track
-									)
+										device_name,gear,segment_efforts,highlighted_kudosers,track)
+                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                    );
 
-			    values('$athlete','$id','$external_id','$name','$distance','$moving_time',
-				       '$total_elevation_gain','$type','$start_date_local','$average_speed','$gear_id',
-					   '$location_city','$location_state','$location_country',
-					   $achievement_count,$kudos_count,$average_heartrate,$max_heartrate,
-					   $elev_high,$elev_low,'$start_latlng','$end_latlng',$workout_type,
-					   $average_cadence,$average_temp,$average_watts,$suffer_score,$calories,
-					   '$device_name','$gear','$segment_efforts','$highlighted_kudosers','$track_'
-					   )";
-				
-		$Resp = mysqli_query($mysqli_link,$sql);
+        mysqli_stmt_bind_param($stmt, 'ssssssssssssssiiiiddssidddidssssb',
+                            $athlete,$id,$external_id,$name,$distance,$moving_time,
+                            $total_elevation_gain,$type,$start_date_local,$average_speed,$gear_id,
+                            $location_city,$location_state,$location_country,
+                            $achievement_count,$kudos_count,$average_heartrate,$max_heartrate,
+                            $elev_high,$elev_low,$start_latlng,$end_latlng,$workout_type,
+                            $average_cadence,$average_temp,$average_watts,$suffer_score,$calories,
+                            $device_name,$gear,$segment_efforts,$highlighted_kudosers,$track_ );
 
-        if(!$Resp) {
-            logger("Error sql: ". $sql);
-        }
+        mysqli_stmt_execute($stmt);
+
+        logger("Filas afectadas: " . mysqli_stmt_affected_rows($stmt));
+
+        mysqli_stmt_close($stmt);
 			
 	}
 	
