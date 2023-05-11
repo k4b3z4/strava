@@ -172,24 +172,29 @@ function traer_tracks(){
 	foreach($tracks as $track){
 
         $stmt = mysqli_prepare($mysqli_link, "INSERT INTO tracks
-                                    (athlete,id,external_id,name,distance,moving_time,
-			                            total_elevation_gain,type,start_date_local,average_speed,gear_id,
-										location_city,location_state,location_country,
-										achievement_count,kudos_count,average_heartrate,max_heartrate,
-										elev_high,elev_low,start_latlng,end_latlng,workout_type,
-										average_cadence,average_temp,average_watts,suffer_score,calories,
-										device_name,gear,segment_efforts,highlighted_kudosers,track)
-                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                                       (athlete,id,external_id,name,distance,
+                                        moving_time,total_elevation_gain,type,start_date_local,average_speed,
+                                        gear_id,location_city,location_state,location_country,achievement_count,
+                                        kudos_count,average_heartrate,max_heartrate,elev_high,elev_low,
+                                        start_latlng,end_latlng,workout_type,average_cadence,average_temp,
+                                        average_watts,suffer_score,calories,device_name,gear,
+                                        segment_efforts,highlighted_kudosers,track)
+                            VALUES (?,?,?,?,?,?,
+                                    ?,?,?,?,?,?,
+                                    ?,?,?,?,?,?,
+                                    ?,?,?,?,?,?,
+                                    ?,?,?,?,?,?,
+                                    ?,?,?)"
                     );
 
         mysqli_stmt_bind_param($stmt, 'ssssssssssssssiiiiddssidddidsbbbb',
-                            $athlete,$id,$external_id,$name,$distance,$moving_time,
-                            $total_elevation_gain,$type,$start_date_local,$average_speed,$gear_id,
-                            $location_city,$location_state,$location_country,
-                            $achievement_count,$kudos_count,$average_heartrate,$max_heartrate,
-                            $elev_high,$elev_low,$start_latlng,$end_latlng,$workout_type,
-                            $average_cadence,$average_temp,$average_watts,$suffer_score,$calories,
-                            $device_name,$gear,$segment_efforts,$highlighted_kudosers,$track_ 
+                            $athlete,$id,$external_id,$name,$distance,
+                            $moving_time,$total_elevation_gain,$type,$start_date_local,$average_speed,
+                            $gear_id,$location_city,$location_state,$location_country,$achievement_count,
+                            $kudos_count,$average_heartrate,$max_heartrate,$elev_high,$elev_low,
+                            $start_latlng,$end_latlng,$workout_type,$average_cadence,$average_temp,
+                            $average_watts,$suffer_score,$calories,$device_name,$gear,
+                            $segment_efforts,$highlighted_kudosers,$track_ 
                     );
 		
 		$id = $track["id"];
@@ -199,7 +204,7 @@ function traer_tracks(){
 		$moving_time = $track["moving_time"];
 		$total_elevation_gain = $track["total_elevation_gain"];
 		$type = $track["type"];
-		$start_date_local = $track["start_date_local"];
+		$start_date_local =  date('Y-m-d h:i:s', strtotime($track["start_date_local"])) ;
 		$average_speed = $track["average_speed"];
 		$gear_id = $track["gear_id"];
 		$location_city = scape($track["location_city"]);
