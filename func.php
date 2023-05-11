@@ -209,11 +209,8 @@ function traer_tracks(){
 		$segment_efforts = json_encode($track["segment_efforts"]);
 		
 		$track_ = json_encode($track);
-				
-		$Resp = mysqli_query($mysqli_link,$sql);
 
-
-        $stmt = mysqli_prepare($link, "INSERT INTO tracks
+        $stmt = mysqli_prepare($mysqli_link, "INSERT INTO tracks
                                     (athlete,id,external_id,name,distance,moving_time,
 			                            total_elevation_gain,type,start_date_local,average_speed,gear_id,
 										location_city,location_state,location_country,
