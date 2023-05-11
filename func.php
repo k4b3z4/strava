@@ -81,8 +81,8 @@ function traer_tracks(){
 	if( mysqli_num_rows($Resp)==0 )	{
 		
 		$sql2 = "select year(start_date_local) as y,
-	               month(start_date_local) as m
-	          from tracks where athlete='$athlete' order by start_date_local desc limit 1";
+	                month(start_date_local) as m
+	                from tracks where athlete='$athlete' order by start_date_local desc limit 1";
 			  
 			  
 		$Resp2= mysqli_query($mysqli_link,$sql2);
@@ -119,8 +119,12 @@ function traer_tracks(){
 			
 		}
 	
-		$sql3 = "insert into busq (athlete,y,m) values('$athlete','$y','$m'); ";
+		$sql3 = "insert into busq (athlete,y,m) values('$athlete',$y,$m); ";
 		$Resp3 = mysqli_query($mysqli_link,$sql3);	
+
+        if(!$Resp3) {
+            logger("Error sql: ". $sql3);
+        }
 
 	}else{
 		
@@ -218,13 +222,17 @@ function traer_tracks(){
 			    values('$athlete','$id','$external_id','$name','$distance','$moving_time',
 				       '$total_elevation_gain','$type','$start_date_local','$average_speed','$gear_id',
 					   '$location_city','$location_state','$location_country',
-					   '$achievement_count','$kudos_count','$average_heartrate','$max_heartrate',
-					   '$elev_high','$elev_low','$start_latlng','$end_latlng','$workout_type',
-					   '$average_cadence','$average_temp','$average_watts','$suffer_score','$calories',
+					   $achievement_count,$kudos_count,$average_heartrate,$max_heartrate,
+					   $elev_high,$elev_low,'$start_latlng','$end_latlng',$workout_type,
+					   $average_cadence,$average_temp,$average_watts,$suffer_score,$calories,
 					   '$device_name','$gear','$segment_efforts','$highlighted_kudosers','$track_'
 					   )";
 				
 		$Resp = mysqli_query($mysqli_link,$sql);
+
+        if(!$Resp) {
+            logger("Error sql: ". $sql);
+        }
 			
 	}
 	
