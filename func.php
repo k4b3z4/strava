@@ -240,6 +240,9 @@ function traer_tracks(){
 	$sql = "update busq set m='$m' where athlete='$athlete'";
 	$Resp= mysqli_query($mysqli_link,$sql);
 	
+    if(!$Resp){
+        logger("Error sql: " . $sql);
+    }
 		
 }
 
