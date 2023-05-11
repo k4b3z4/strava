@@ -186,22 +186,22 @@ function traer_tracks(){
 		$location_country = scape($track["location_country"]);
 		
 		$achievement_count = $track["achievement_count"];
-		$kudos_count = $track["kudos_count"];
-		$average_heartrate = $track["average_heartrate"];
-		$max_heartrate = $track["max_heartrate"];
+		$kudos_count = intval($track["kudos_count"]);
+		$average_heartrate = intval($track["average_heartrate"]);
+		$max_heartrate = intval($track["max_heartrate"]);
 		
-		$elev_high = $track["elev_high"];
-		$elev_low = $track["elev_low"];
+		$elev_high = floatval($track["elev_high"]);
+		$elev_low = floatval($track["elev_low"]);
 		$start_latlng = $track["start_latlng"][0].", ".$track["start_latlng"][1];
 		$end_latlng =   $track["end_latlng"][0].", ".$track["end_latlng"][1];
 		
-		$workout_type = $track["workout_type"];
-		$average_cadence = $track["average_cadence"];
-		$average_temp = $track["average_temp"];
-		$average_watts = $track["average_watts"];
-		$suffer_score = $track["suffer_score"];
+		$workout_type = intval($track["workout_type"]);
+		$average_cadence = floatval($track["average_cadence"]);
+		$average_temp = floatval($track["average_temp"]);
+		$average_watts = floatval($track["average_watts"]);
+		$suffer_score = intval($track["suffer_score"]);
 
-		$calories = $track["calories"];
+		$calories = floatval($track["calories"]);
 		$device_name = $track["device_name"];
 		
 		$highlighted_kudosers = json_encode($track["highlighted_kudosers"]);
