@@ -70,6 +70,7 @@ if($state == "auth"){
 if( $share ){
 
     $athlete = $share;
+    $access_token = "1";
 
 }else{
 
