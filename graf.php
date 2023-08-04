@@ -10,6 +10,7 @@ function Mostrar(){
 	global $mysqli_link;
 	
 	$athlete   = validar($_GET["a"]);
+    $share     = validar($_GET["share"]);
 	$desde     = validar($_GET["d"]);
 	$hasta     = validar($_GET["h"]);
 	
@@ -134,7 +135,7 @@ function Mostrar(){
 				$desde_ = substr($row["periodo"],0,7) ."-01";
 				$hasta_ = date("Y-m-d", mktime(0,0,0, substr($desde_,5,2) +1 , 0, substr($desde_,0,4)));
 			}
-			$url = "index.php?type=$type&wtype=$wtype&location=$location&gear_id=$gear_id&hr=$hr&d=$desde_&h=$hasta_";
+			$url = "index.php?type=$type&wtype=$wtype&location=$location&gear_id=$gear_id&hr=$hr&d=$desde_&h=$hasta_&share=$share";
 		}
 		
 		//$dato["tiempo_value"][$row["periodo"]] = $horas."h ".$minutos."m;$url";
