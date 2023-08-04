@@ -506,8 +506,8 @@ if($buscar == "2"){
 					
 					echo "<div class='trackslist'>";
 					
-					echo "<img src='graf.php?type=$type&wtype=$wtype&d=$desde&h=$hasta&a=$athlete&location=$location&gear_id=$gear_id&hr=$hr' id='Grafico' >";
-					echo "<script>addImage('Grafico','pictureMap','graf.php?type=$type&wtype=$wtype&d=$desde&h=$hasta&a=$athlete&location=$location&gear_id=$gear_id&hr=$hr&ImageMap=get')</script>";
+					echo "<img src='graf.php?type=$type&wtype=$wtype&d=$desde&h=$hasta&a=$athlete&location=$location&gear_id=$gear_id&hr=$hr&share=$share' id='Grafico' >";
+					echo "<script>addImage('Grafico','pictureMap','graf.php?type=$type&wtype=$wtype&d=$desde&h=$hasta&a=$athlete&location=$location&gear_id=$gear_id&hr=$hr&ImageMap=get&share=$share')</script>";
 		
 					echo "<br><br><table class='tracklist compact' id='tracks'><thead><tr><th >Date</th>". 
 				         "<th>Name (click to view on strava)</th>".
