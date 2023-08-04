@@ -236,7 +236,7 @@ if($buscar == "2"){
 					if( $gear_id  )      $filteredby.= " [<a href=\"?gear_id=$gear_id&$fechas_\">".$gear[$gear_id]."</a>] ";
 					if( $hr  )           $filteredby.= " [<a href=\"?hr=$hr&$fechas_\">".$hr."</a>] ";
 					if( $type or $wtype or $location or $gear_id or $desdefiltro or $hastafiltro) $filteredby.= " [<a href='?$fechas_'>Clean Filter</a>]";
-                    $filteredby.= " [<a ref='".$_SERVER['REQUEST_URI']."'>share to a friend</a> ] ";
+                    $filteredby.= " [<a href='".$_SERVER['REQUEST_URI']."'>share to a friend</a> ] ";
 					$filteredby.= "<br/>";	
 		
 	?>
