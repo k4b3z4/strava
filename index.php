@@ -66,14 +66,23 @@ if($state == "auth"){
 		
 }
 
-$access_token = $_SESSION["access_token"];
-$athlete = $_SESSION["athlete"];
 
-if($userid){
-	$athlete = $userid;
-	$_SESSION["athlete"] = $athlete;
-	$access_token = "1";
-	$_SESSION["access_token"] = $access_token;
+if( $share ){
+
+    $athlete = $share;
+
+}else{
+
+    $access_token = $_SESSION["access_token"];
+    $athlete = $_SESSION["athlete"];
+
+    if($userid){
+        $athlete = $userid;
+        $_SESSION["athlete"] = $athlete;
+        $access_token = "1";
+        $_SESSION["access_token"] = $access_token;
+    }
+
 }
 
 
@@ -101,13 +110,13 @@ if($buscar == "2"){
 		<script type="text/javascript">
 
 			function openNav() {
-				$("#mysidenav").css("width","450px");
-            $("#mysidenav").css("overflow-y","scroll");
+			    $("#mysidenav").css("width","450px");
+                $("#mysidenav").css("overflow-y","scroll");
 			}
 
 			function closeNav() {
-				$("#mysidenav").css("width","30");
-            $("#mysidenav").css("overflow-y","hidden");
+			    $("#mysidenav").css("width","30");
+                $("#mysidenav").css("overflow-y","hidden");
 			}
 		
 			function toggleNav() {
