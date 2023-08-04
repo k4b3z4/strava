@@ -21,6 +21,7 @@ $buscar = validar($_GET["buscar"]);
 $logout = validar($_GET["logout"]);
 
 $userid = validar($_GET["userid"]);
+$share  = validar($_GET["share"]);
 
 if($logout){
 	session_destroy();
@@ -236,16 +237,16 @@ if($buscar == "2"){
 					if( $gear_id  )      $filteredby.= " [<a href=\"?gear_id=$gear_id&$fechas_\">".$gear[$gear_id]."</a>] ";
 					if( $hr  )           $filteredby.= " [<a href=\"?hr=$hr&$fechas_\">".$hr."</a>] ";
 					if( $type or $wtype or $location or $gear_id or $desdefiltro or $hastafiltro) $filteredby.= " [<a href='?$fechas_'>Clean Filter</a>]";
-                    $filteredby.= " [<a href='".$_SERVER['REQUEST_URI']."'>share to a friend</a> ] ";
+                    $filteredby.= " [<a href='".$_SERVER['REQUEST_URI']."&share=".$athlete."'>share to a friend</a> ] ";
 					$filteredby.= "<br/>";	
 		
 	?>
 	
 	
 	
-		<nav id="mysidenav" class="sidenav">
-      <span class='glyphicon glyphicon-menu-hamburger' style='font-size:30px;cursor:pointer;height: 30px;' onclick='toggleNav();'></span>
-		<div class="filters">	
+    <nav id="mysidenav" class="sidenav">
+    <span class='glyphicon glyphicon-menu-hamburger' style='font-size:30px;cursor:pointer;height: 30px;' onclick='toggleNav();'></span>
+    <div class="filters">	
 		
       
       
