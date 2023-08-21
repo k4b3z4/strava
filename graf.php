@@ -55,8 +55,8 @@ function Mostrar(){
 		$links = false;
 		$x = 0;
 		while( date($periodoP, mktime(0,0,0,$desde_m,$desde_d+$x-1,$desde_y)) != $hasta ){
-			array_push($periodo,date($periodoP, mktime(0,0,0,$desde_m,$desde_d+$x,$desde_y)) );  // agrego el periodo
-			$x++;
+			array_push($periodo,date($periodoP, mktime(0,0,0, $desde_m, $desde_d+$x, $desde_y)) );  // agrego el periodo
+			$x=$x+7;
 		}
 		$mismo_mes = true;
 		
