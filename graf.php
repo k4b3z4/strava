@@ -68,7 +68,8 @@ function Mostrar(){
 		$periodoM = "%Y-%m";
 		$links = true;
 		$x = 0;
-		while( date($periodoP, mktime(0,0,0,$desde_m+$x-1,$desde_d,$desde_y)) != $hasta_y."-".$hasta_m ){
+		while( date($periodoP, mktime(0,0,0,$desde_m+$x-1,$desde_d,$desde_y)) <
+               date($periodoP, mktime(0,0,0,$hasta_m,$hasta_d , $hasta_y)) ){
 			array_push($periodo,date($periodoP, mktime(0,0,0,$desde_m+$x,$desde_d,$desde_y)) );  // agrego el periodo
 			$x++;
 		}
