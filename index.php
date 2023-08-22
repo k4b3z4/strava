@@ -516,8 +516,27 @@ if($buscar == "2"){
 						 "<th>cad</th>".
 						 "<th>Distance - Time - Gain</th></tr></thead><tbody>\n";
 			
-					// Tracks			
+					// Tracks
+                    $semana_ = false;			
 					while ( $row = mysqli_fetch_array($Resp)) {
+
+                        $semana_ = $semana;
+                        $semana = date("W", strtotime($row["start_date_local"]));
+                        
+
+                        if($semana_ <> $semana){
+                            echo "<tr>";
+                            echo "<td>Week ". number_format($semana +1) ."</td>";
+                            echo "<td colspan=5><b> ".number_format($total_distancia / 1000,2)." kms - ".
+                                                    number_format($total_time / 3600,2)." hs - ". 
+                                                    number_format($total_elevation ,2)." m</b></td>";
+                            echo "</tr>";
+
+                            $total_distancia = 0;
+                            $total_elevation = 0;
+                            $total_time = 0;
+                        }
+
 						echo "<tr><td>".$row["start_date_local"]."</td>";
 						echo "<td>";	
 						echo "<a href='https://www.strava.com/activities/".$row["id"]."' target='_blank'>".$row["name"]."</a></td>";
@@ -525,9 +544,25 @@ if($buscar == "2"){
 						echo "<td>".$row["hr"]."</td>\n";
 						echo "<td>". ceil( $row["average_cadence"] * 2 )."</td>\n";
 				
-						echo "<td>". number_format($row["distance"] / 1000,2) . " kms - " . number_format($row["moving_time"]/3600,2) . " hs - " . $row["total_elevation_gain"] .  " m </td>";
+						echo "<td>". number_format($row["distance"] / 1000,2) . " km - " . number_format($row["moving_time"]/3600,2) . " hs - " . $row["total_elevation_gain"] .  " m </td>";
 						echo "</tr>\n";
+
+                        $total_distancia += $row["distance"]; 
+                        $total_time += $row["moving_time"];
+                        $total_elevation += $row["total_elevation_gain"];
+
+
 					}
+
+                    
+                    echo "<tr>";
+                    echo "<td>Week ". number_format($semana) ."</td>";
+                    echo "<td colspan=5><b>".number_format($total_distancia / 1000,2)." km - ".
+                                            number_format($total_time / 3600,2)." hs - ". 
+                                            number_format($total_elevation ,2)." m</b></td>";
+                    echo "</tr>";
+
+
 					echo "</tbody></table>";
 				echo "</div>";
 			?>
