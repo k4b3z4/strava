@@ -527,7 +527,7 @@ if($buscar == "2"){
                         if($semana_ <> $semana){
                             echo "<tr>";
                             echo "<td>Week ". number_format($semana +1) ."</td>";
-                            echo "<td colspan=5><b> ".number_format($total_distancia / 1000,2)." kms - ".
+                            echo "<td colspan=5><b> ".number_format($total_distancia / 1000,2)." km - ".
                                                     number_format($total_time / 3600,2)." hs - ". 
                                                     number_format($total_elevation ,2)." m</b></td>";
                             echo "</tr>";
