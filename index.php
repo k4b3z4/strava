@@ -524,7 +524,7 @@ if($buscar == "2"){
                         $semana = date("W", strtotime($row["start_date_local"]));
                         
 
-                        if($semana_ <> $semana){
+                        if($semana and $semana_ <> $semana){
                             echo "<tr>";
                             echo "<td>Week ". number_format($semana +1) ."</td>";
                             echo "<td colspan=5><b> ".number_format($total_distancia / 1000,2)." km - ".
